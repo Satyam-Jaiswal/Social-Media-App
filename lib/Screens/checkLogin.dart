@@ -7,6 +7,7 @@ import 'package:Walnut/Screens/notification.dart';
 import 'package:Walnut/Screens/profile.dart';
 
 import 'package:Walnut/widgets/rounded_button.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -65,7 +66,15 @@ class _CheckLoginState extends State<CheckLogin> {
   }
 
   whenPageChanges(int pageIndex) {
+    setState(() {
     this.getPageIndex = pageIndex;
+      
+    });
+  }
+
+
+  changePage(int pageIndex){
+    pageController.animateToPage(pageIndex, duration: Duration(milliseconds: 400), curve: Curves.bounceInOut,);
   }
 
   Scaffold loginScreen() {
@@ -132,9 +141,7 @@ class _CheckLoginState extends State<CheckLogin> {
   Scaffold userTimeline() {
     return Scaffold(
       body: Background(
-          child: Column(
-        children: <Widget>[
-          PageView(
+          child: PageView(
             children: <Widget>[
               Timeline(),
               Search(),
@@ -145,8 +152,21 @@ class _CheckLoginState extends State<CheckLogin> {
             onPageChanged: whenPageChanges,
             physics: NeverScrollableScrollPhysics(),
           ),
+      
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        currentIndex: getPageIndex,
+        onTap: changePage,
+        backgroundColor: Colors.grey[300],
+        activeColor: Colors.green[600],
+        inactiveColor: Colors.blueGrey,
+        items: [
+          BottomNavigationBarItem(icon: Icon(Icons.home)),
+          BottomNavigationBarItem(icon: Icon(Icons.search)),
+          BottomNavigationBarItem(icon: Icon(Icons.message)),
+          BottomNavigationBarItem(icon: Icon(Icons.person)),
         ],
-      )),
+      ),
     );
   }
 
