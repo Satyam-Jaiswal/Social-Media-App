@@ -1,7 +1,10 @@
-
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/Components/or_divider.dart';
 import 'package:Walnut/Components/social_icon.dart';
+import 'package:Walnut/Screens/search.dart';
+import 'package:Walnut/Screens/timeline.dart';
+import 'package:Walnut/Screens/notification.dart';
+import 'package:Walnut/Screens/profile.dart';
 
 import 'package:Walnut/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
@@ -13,21 +16,19 @@ import 'generalTimeline.dart';
 
 final GoogleSignIn gSignIn = GoogleSignIn();
 
-
-
 class CheckLogin extends StatefulWidget {
   @override
   _CheckLoginState createState() => _CheckLoginState();
 }
 
 class _CheckLoginState extends State<CheckLogin> {
+  bool isSignedIn = false;
+  PageController pageController;
+  int getPageIndex = 0;
 
-
-   bool isSignedIn = false; 
-
-   void initState() {
+  void initState() {
     super.initState();
-    // pageController = PageController();
+    pageController = PageController();
 
     gSignIn.onCurrentUserChanged.listen((gSignInAccount) {
       controlSignIn(gSignInAccount);
@@ -42,13 +43,11 @@ class _CheckLoginState extends State<CheckLogin> {
     });
   }
 
-   controlSignIn(GoogleSignInAccount signInAccount) async {
+  controlSignIn(GoogleSignInAccount signInAccount) async {
     if (signInAccount != null) {
-    
       setState(() {
         isSignedIn = true;
       });
-    
     } else {
       setState(() {
         isSignedIn = false;
@@ -56,15 +55,24 @@ class _CheckLoginState extends State<CheckLogin> {
     }
   }
 
-   logInUser() {
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
+
+  logInUser() {
     gSignIn.signIn();
   }
 
-   Scaffold loginScreen(){
-      Size size = MediaQuery.of(context).size;
+  whenPageChanges(int pageIndex) {
+    this.getPageIndex = pageIndex;
+  }
+
+  Scaffold loginScreen() {
+    Size size = MediaQuery.of(context).size;
     // This size provide us total height and width of our screen
     return Scaffold(
-          body: Background(
+      body: Background(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -79,15 +87,14 @@ class _CheckLoginState extends State<CheckLogin> {
                 height: size.height * 0.40,
               ),
               SizedBox(height: size.height * 0.05),
-
-               Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   SocalIcon(
                     iconSrc: "assets/icons/facebook.svg",
                     press: () {},
                   ),
-                    SocalIcon(
+                  SocalIcon(
                     iconSrc: "assets/icons/google-plus.svg",
                     press: () {
                       logInUser();
@@ -97,18 +104,14 @@ class _CheckLoginState extends State<CheckLogin> {
                     iconSrc: "assets/icons/twitter.svg",
                     press: () {},
                   ),
-                
                 ],
               ),
-             
-               OrDivider(),
-
-
+              OrDivider(),
               RoundedButton(
                 text: "SKIP",
                 color: kPrimaryLightColor,
                 textColor: Colors.black,
-                press: () {                 
+                press: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -119,37 +122,40 @@ class _CheckLoginState extends State<CheckLogin> {
                   );
                 },
               ),
-             
-             
             ],
           ),
         ),
       ),
     );
-   }
+  }
 
-
-   Scaffold userTimeline(){
-      return Scaffold(
-      appBar: AppBar(leading:( Icon(Icons.ac_unit)),title: Text("Walnut") ,),
-      body: Background(child: Text("Satyam Jaiswal") ),
-      
-      
+  Scaffold userTimeline() {
+    return Scaffold(
+      body: Background(
+          child: Column(
+        children: <Widget>[
+          PageView(
+            children: <Widget>[
+              Timeline(),
+              Search(),
+              NotificationPage(),
+              ProfilePage(),
+            ],
+            controller: pageController,
+            onPageChanged: whenPageChanges,
+            physics: NeverScrollableScrollPhysics(),
+          ),
+        ],
+      )),
     );
-
-   }
-
-   
+  }
 
   @override
   Widget build(BuildContext context) {
-    if(isSignedIn){
+    if (isSignedIn) {
       return userTimeline();
+    } else {
+      return loginScreen();
     }
-    else{    
-     return loginScreen()  ;   
-    }    
-    
-    
   }
-  }
+}
