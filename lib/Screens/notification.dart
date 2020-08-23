@@ -1,3 +1,5 @@
+import 'package:Walnut/Components/backgroung.dart';
+import 'package:Walnut/widgets/headerWidget.dart';
 import 'package:flutter/material.dart';
 
 class NotificationPage extends StatefulWidget {
@@ -8,7 +10,9 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      appBar: header(context, strTitle : "Notification"),
+      body: Background(child: Text("Notification Page goes here")),
       
     );
   }

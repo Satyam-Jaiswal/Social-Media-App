@@ -1,3 +1,5 @@
+import 'package:Walnut/Components/backgroung.dart';
+import 'package:Walnut/widgets/headerWidget.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -8,7 +10,9 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
+      appBar: header(context, strTitle : "Profile"),
+      body: Background(child: Text("profile Page goes here")),
       
     );
   }
