@@ -1,3 +1,5 @@
+// import 'dart:html';
+
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/Components/or_divider.dart';
 import 'package:Walnut/Components/social_icon.dart';
@@ -5,17 +7,26 @@ import 'package:Walnut/Screens/search.dart';
 import 'package:Walnut/Screens/timeline.dart';
 import 'package:Walnut/Screens/notification.dart';
 import 'package:Walnut/Screens/profile.dart';
+import 'package:Walnut/models/user.dart';
 
 import 'package:Walnut/widgets/rounded_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../constants.dart';
+import 'createAccountPage.dart';
 import 'generalTimeline.dart';
 
+
 final GoogleSignIn gSignIn = GoogleSignIn();
+
+final usersReference = Firestore.instance.collection("users");
+
+final DateTime timestamp = DateTime.now();
+User currentUser;
 
 class CheckLogin extends StatefulWidget {
   @override
@@ -46,6 +57,7 @@ class _CheckLoginState extends State<CheckLogin> {
 
   controlSignIn(GoogleSignInAccount signInAccount) async {
     if (signInAccount != null) {
+      await saveDatatoFirebase();
       setState(() {
         isSignedIn = true;
       });
@@ -70,6 +82,33 @@ class _CheckLoginState extends State<CheckLogin> {
     this.getPageIndex = pageIndex;
       
     });
+  }
+
+  saveDatatoFirebase() async {
+    final GoogleSignInAccount gCurrentUser = gSignIn.currentUser;
+    DocumentSnapshot documentSnapshot = await usersReference.document(gCurrentUser.id).get();
+
+    if (!documentSnapshot.exists) {
+      final username = await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => CreateAccountPage()));
+
+      usersReference.document(gCurrentUser.id).setData({
+        "id": gCurrentUser.id,
+        "profileName": gCurrentUser.displayName,
+        "username": username,
+        "url": gCurrentUser.photoUrl,
+        "email": gCurrentUser.email,
+        "bio": "",
+        "timeStamp": timestamp,
+      });
+
+      documentSnapshot = await usersReference.document(gCurrentUser.id).get();
+
+    }
+
+    
+     currentUser = User.fromDocument(documentSnapshot);
+
   }
 
 
