@@ -12,7 +12,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context, strTitle : "Notification"),
-      body: Background(child: Text("Notification Page goes here")),
+      body: Background(child: CircularProgressIndicator()),
       
     );
   }

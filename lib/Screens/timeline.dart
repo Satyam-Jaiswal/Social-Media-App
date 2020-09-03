@@ -12,7 +12,7 @@ class _TimelineState extends State<Timeline> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: header(context, strTitle : "Walnut"),
-      body: Background(child: Text("Walnut Page goes here")),
+      body: Background(child: CircularProgressIndicator()),
       
     );
   }

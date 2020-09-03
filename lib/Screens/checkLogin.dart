@@ -185,7 +185,7 @@ class _CheckLoginState extends State<CheckLogin> {
               Timeline(),
               Search(),
               NotificationPage(),
-              ProfilePage(),
+              ProfilePage(userProfileId: currentUser?.id),
             ],
             controller: pageController,
             onPageChanged: whenPageChanges,

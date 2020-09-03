@@ -1,7 +1,4 @@
-
-
 import 'dart:async';
-
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/widgets/rounded_button.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +41,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                 "Set up a Username",
                 style: TextStyle(
                   fontSize: 26.0,
-                  //color: Colors.white
                 ),
               ),
             ),
