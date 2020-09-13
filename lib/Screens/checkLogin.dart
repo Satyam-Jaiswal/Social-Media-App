@@ -77,6 +77,10 @@ class _CheckLoginState extends State<CheckLogin> {
     gSignIn.signIn();
   }
 
+   logOutUser() {
+    gSignIn.signOut();
+  }
+
   whenPageChanges(int pageIndex) {
     setState(() {
     this.getPageIndex = pageIndex;
@@ -186,6 +190,7 @@ class _CheckLoginState extends State<CheckLogin> {
               Search(),
               NotificationPage(),
               ProfilePage(userProfileId: currentUser?.id),
+              // IconButton(icon: Icon(Icons.clear, color: Colors.white,), onPressed: logOutUser()),),
             ],
             controller: pageController,
             onPageChanged: whenPageChanges,
@@ -204,6 +209,8 @@ class _CheckLoginState extends State<CheckLogin> {
           BottomNavigationBarItem(icon: Icon(Icons.search)),
           BottomNavigationBarItem(icon: Icon(Icons.notifications)),
           BottomNavigationBarItem(icon: Icon(Icons.person)),
+          // BottomNavigationBarItem(icon: Icon(Icons.logout)),
+          
         ],
       ),
     );
