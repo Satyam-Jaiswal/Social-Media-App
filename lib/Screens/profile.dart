@@ -8,8 +8,9 @@ import 'checkLogin.dart';
 
 class ProfilePage extends StatefulWidget {
   String userProfileId;
+  bool isacontributor;
 
-  ProfilePage({this.userProfileId});
+  ProfilePage({this.userProfileId, this.isacontributor});
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }

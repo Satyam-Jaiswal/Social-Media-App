@@ -104,6 +104,7 @@ class _CheckLoginState extends State<CheckLogin> {
         "email": gCurrentUser.email,
         "bio": "",
         "timeStamp": timestamp,
+        "isacontributor": false,
       });
 
       documentSnapshot = await usersReference.document(gCurrentUser.id).get();
@@ -189,7 +190,7 @@ class _CheckLoginState extends State<CheckLogin> {
               Timeline(),
               Search(),
               NotificationPage(),
-              ProfilePage(userProfileId: currentUser?.id),
+              ProfilePage(userProfileId: currentUser?.id, isacontributor:currentUser?.isacontributor ,),
               // IconButton(icon: Icon(Icons.clear, color: Colors.white,), onPressed: logOutUser()),),
             ],
             controller: pageController,
