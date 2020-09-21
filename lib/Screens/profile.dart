@@ -110,7 +110,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return EditProfilePage()
+                        return EditProfilePage(currentOnlineUserId: currentUserId,)
                         ;
                       },
                     ),
