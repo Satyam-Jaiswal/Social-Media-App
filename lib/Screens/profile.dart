@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-               RoundedButton(
+              RoundedButton(
                 text: "Edit Profile",
                 color: kPrimaryLightColor,
                 textColor: Colors.black,
@@ -110,8 +110,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     context,
                     MaterialPageRoute(
                       builder: (context) {
-                        return EditProfilePage(currentOnlineUserId: currentUserId,)
-                        ;
+                        return EditProfilePage(
+                          currentOnlineUserId: currentUserId,
+                        );
                       },
                     ),
                   );
