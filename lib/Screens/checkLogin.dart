@@ -22,6 +22,8 @@ import 'generalTimeline.dart';
 
 
 final GoogleSignIn gSignIn = GoogleSignIn();
+final activityFeedReference = Firestore.instance.collection("feed");
+final postsReference = Firestore.instance.collection("posts");
 
 final usersReference = Firestore.instance.collection("users");
 
@@ -207,7 +209,7 @@ class _CheckLoginState extends State<CheckLogin> {
         inactiveColor: Colors.blueGrey,
         items: [
           BottomNavigationBarItem(icon: Icon(Icons.home)),
-          BottomNavigationBarItem(icon: Icon(Icons.search)),
+          BottomNavigationBarItem(icon: Icon(Icons.directions_run)),
           BottomNavigationBarItem(icon: Icon(Icons.notifications)),
           BottomNavigationBarItem(icon: Icon(Icons.person)),
           // BottomNavigationBarItem(icon: Icon(Icons.logout)),
