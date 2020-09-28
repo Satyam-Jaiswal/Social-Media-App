@@ -14,7 +14,6 @@ class PostWidget extends StatefulWidget {
   final dynamic likes;
   final String username;
   final String content;
-  // final String location;
   final String url;
 
   PostWidget({
@@ -23,7 +22,6 @@ class PostWidget extends StatefulWidget {
     this.likes,
     this.username,
     this.content,
-    // this.location,
     this.url,
   });
 
@@ -34,7 +32,6 @@ class PostWidget extends StatefulWidget {
       likes: documentSnapshot["likes"],
       username: documentSnapshot["username"],
       content: documentSnapshot["content"],
-      // location: documentSnapshot["location"],
       url: documentSnapshot["url"],
     );
   }
@@ -59,7 +56,6 @@ class PostWidget extends StatefulWidget {
         likes: this.likes,
         username: this.username,
         content: this.content,
-        // location: this.location,
         url: this.url,
         likeCount: getTotalNumberOfLikes(this.likes),
       );
@@ -71,7 +67,6 @@ class _PostWidgetState extends State<PostWidget> {
   Map likes;
   final String username;
   final String content;
-  // final String location;
   final String url;
   int likeCount;
   bool isLiked;
@@ -84,7 +79,6 @@ class _PostWidgetState extends State<PostWidget> {
     this.likes,
     this.username,
     this.content,
-    // this.location,
     this.url,
     this.likeCount,
   });
@@ -121,7 +115,6 @@ class _PostWidgetState extends State<PostWidget> {
             backgroundColor: Colors.grey,
           ),
           title: GestureDetector(
-            // onTap: () => displayUserProfile(context, userProfileId: user.id),
             child: Text(
               user.username,
               style: TextStyle(
@@ -130,10 +123,6 @@ class _PostWidgetState extends State<PostWidget> {
               ),
             ),
           ),
-          // subtitle: Text(
-          //   location,
-          //   style: TextStyle(color: Colors.white),
-          // ),
           trailing: isPostOwner
               ? IconButton(
                   icon: Icon(
@@ -152,14 +141,7 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
-  // displayUserProfile(BuildContext context, {String userProfileId}) {
-  //   Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => ProfilePage(
-  //                 userProfileId: userProfileId,
-  //               )));
-  // }
+
 
   removeLike() {
     bool isNotPostOwner = currentOnlineUserId != ownerId;

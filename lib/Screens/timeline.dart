@@ -6,7 +6,6 @@ import 'package:Walnut/widgets/searchuser.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
 import 'checkLogin.dart';
 import 'createPost.dart';
 
@@ -98,7 +97,7 @@ class _TimelineState extends State<Timeline> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CreatePost();
+                  return CreatePost(currentUser);
                 },
               ),
             );
