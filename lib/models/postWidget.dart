@@ -1,19 +1,19 @@
 import 'dart:async';
 import 'package:Walnut/Screens/checkLogin.dart';
 import 'package:Walnut/Screens/commentPage.dart';
+import 'package:Walnut/Screens/profile.dart';
 import 'package:Walnut/models/user.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-
 
 class PostWidget extends StatefulWidget {
   final String postId;
   final String ownerId;
   final dynamic likes;
   final String username;
-  final String content;
+  final String description;
+  final String location;
   final String url;
 
   PostWidget({
@@ -21,7 +21,8 @@ class PostWidget extends StatefulWidget {
     this.ownerId,
     this.likes,
     this.username,
-    this.content,
+    this.description,
+    this.location,
     this.url,
   });
 
@@ -31,7 +32,8 @@ class PostWidget extends StatefulWidget {
       ownerId: documentSnapshot["ownerId"],
       likes: documentSnapshot["likes"],
       username: documentSnapshot["username"],
-      content: documentSnapshot["content"],
+      description: documentSnapshot["description"],
+      location: documentSnapshot["location"],
       url: documentSnapshot["url"],
     );
   }
@@ -55,7 +57,8 @@ class PostWidget extends StatefulWidget {
         ownerId: this.ownerId,
         likes: this.likes,
         username: this.username,
-        content: this.content,
+        description: this.description,
+        location: this.location,
         url: this.url,
         likeCount: getTotalNumberOfLikes(this.likes),
       );
@@ -66,7 +69,8 @@ class _PostWidgetState extends State<PostWidget> {
   final String ownerId;
   Map likes;
   final String username;
-  final String content;
+  final String description;
+  final String location;
   final String url;
   int likeCount;
   bool isLiked;
@@ -78,7 +82,8 @@ class _PostWidgetState extends State<PostWidget> {
     this.ownerId,
     this.likes,
     this.username,
-    this.content,
+    this.description,
+    this.location,
     this.url,
     this.likeCount,
   });
@@ -115,6 +120,7 @@ class _PostWidgetState extends State<PostWidget> {
             backgroundColor: Colors.grey,
           ),
           title: GestureDetector(
+            onTap: () => displayUserProfile(context, userProfileId: user.id),
             child: Text(
               user.username,
               style: TextStyle(
@@ -122,6 +128,10 @@ class _PostWidgetState extends State<PostWidget> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+          ),
+          subtitle: Text(
+            location,
+            style: TextStyle(color: Colors.white),
           ),
           trailing: isPostOwner
               ? IconButton(
@@ -141,7 +151,14 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
-
+  displayUserProfile(BuildContext context, {String userProfileId}) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ProfilePage(
+                  userProfileId: userProfileId,
+                )));
+  }
 
   removeLike() {
     bool isNotPostOwner = currentOnlineUserId != ownerId;
@@ -151,7 +168,6 @@ class _PostWidgetState extends State<PostWidget> {
           .collection("feedItems")
           .document(postId)
           .get()
-          
           .then((document) {
         if (document.exists) {
           document.reference.delete();
@@ -295,7 +311,7 @@ class _PostWidgetState extends State<PostWidget> {
             ),
             Expanded(
               child: Text(
-                content,
+                description,
                 style: TextStyle(color: Colors.white),
               ),
             ),
@@ -308,7 +324,7 @@ class _PostWidgetState extends State<PostWidget> {
   displayComments(BuildContext context,
       {String postId, String ownerId, String url}) {
     Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return CommentsPage();
+      return Container();
     }));
   }
 }

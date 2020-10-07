@@ -1,4 +1,3 @@
-// import 'dart:html';
 
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/Components/or_divider.dart';
@@ -76,6 +75,7 @@ class _CheckLoginState extends State<CheckLogin> {
   }
 
   logInUser() {
+    print('glogintapped');
     gSignIn.signIn();
   }
 
@@ -125,7 +125,6 @@ class _CheckLoginState extends State<CheckLogin> {
 
   Scaffold loginScreen() {
     Size size = MediaQuery.of(context).size;
-    // This size provide us total height and width of our screen
     return Scaffold(
       body: Background(
         child: SingleChildScrollView(

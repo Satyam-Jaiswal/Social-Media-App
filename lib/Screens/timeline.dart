@@ -97,7 +97,7 @@ class _TimelineState extends State<Timeline> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CreatePost(currentUser);
+                  return CreatePost();
                 },
               ),
             );
