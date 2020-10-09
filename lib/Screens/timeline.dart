@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:Walnut/Components/backgroung.dart';
+import 'package:Walnut/Screens/uplodeTest.dart';
 import 'package:Walnut/models/postWidget.dart';
 import 'package:Walnut/models/user.dart';
 import 'package:Walnut/widgets/rounded_button.dart';
@@ -10,6 +13,10 @@ import 'checkLogin.dart';
 import 'createPost.dart';
 
 class Timeline extends StatefulWidget {
+
+  final User gCurrentUser ;
+  Timeline({this.gCurrentUser});
+
   @override
   _TimelineState createState() => _TimelineState();
 }
@@ -97,7 +104,9 @@ class _TimelineState extends State<Timeline> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CreatePost();
+                      // return UploadTest();
+                  return CreatePost(currentUser: currentUser,);
+                  
                 },
               ),
             );

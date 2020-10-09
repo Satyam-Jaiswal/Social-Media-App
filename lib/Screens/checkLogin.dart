@@ -10,6 +10,7 @@ import 'package:Walnut/models/user.dart';
 
 import 'package:Walnut/widgets/rounded_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -21,13 +22,19 @@ import 'generalTimeline.dart';
 
 
 final GoogleSignIn gSignIn = GoogleSignIn();
+
 final activityFeedReference = Firestore.instance.collection("feed");
 final postsReference = Firestore.instance.collection("posts");
+final storageReference = FirebaseStorage.instance.ref().child("Post Pictures");
 
 final usersReference = Firestore.instance.collection("users");
 
+
+
 final DateTime timestamp = DateTime.now();
 User currentUser;
+
+
 
 class CheckLogin extends StatefulWidget {
   @override
@@ -188,7 +195,7 @@ class _CheckLoginState extends State<CheckLogin> {
       body: Background(
           child: PageView(
             children: <Widget>[
-              Timeline(),
+              Timeline(gCurrentUser: currentUser,),
               Search(),
               NotificationPage(),
               ProfilePage(userProfileId: currentUser?.id, isacontributor:currentUser?.isacontributor ,),
