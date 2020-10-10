@@ -69,7 +69,7 @@ Future chooseFile() async {
            _image != null    
                ? RaisedButton(    
                    child: Text('Clear Selection'),    
-                  //  onPressed: clearSelection,    
+                   onPressed: null,    
                  )    
                : Container(),    
            Text('Uploaded Image'),    
