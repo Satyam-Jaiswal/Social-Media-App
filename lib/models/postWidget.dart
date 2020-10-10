@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:Walnut/Screens/checkLogin.dart';
-import 'package:Walnut/Screens/commentPage.dart';
+// import 'package:Walnut/Screens/commentPage.dart';
 import 'package:Walnut/Screens/profile.dart';
 import 'package:Walnut/models/user.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -272,12 +272,12 @@ class _PostWidgetState extends State<PostWidget> {
               padding: EdgeInsets.only(right: 20.0),
             ),
             GestureDetector(
-              onTap: () => displayComments(context,
-                  postId: postId, ownerId: ownerId, url: url),
+              // onTap: () => displayComments(context,
+                  // postId: postId, ownerId: ownerId, url: url),
               child: Icon(
                 Icons.chat_bubble_outline,
                 size: 28.0,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
@@ -321,10 +321,10 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
-  displayComments(BuildContext context,
-      {String postId, String ownerId, String url}) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return Container();
-    }));
-  }
+  // displayComments(BuildContext context,
+  //     {String postId, String ownerId, String url}) {
+  //   Navigator.push(context, MaterialPageRoute(builder: (context) {
+  //     return Container();
+  //   }));
+  // }
 }

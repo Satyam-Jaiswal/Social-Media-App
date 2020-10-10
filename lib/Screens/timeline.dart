@@ -1,7 +1,8 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:Walnut/Components/backgroung.dart';
-import 'package:Walnut/Screens/uplodeTest.dart';
+// import 'package:Walnut/Screens/profile.dart';
+// import 'package:Walnut/Screens/uplodeTest.dart';
 import 'package:Walnut/models/postWidget.dart';
 import 'package:Walnut/models/user.dart';
 import 'package:Walnut/widgets/rounded_button.dart';
@@ -13,8 +14,7 @@ import 'checkLogin.dart';
 import 'createPost.dart';
 
 class Timeline extends StatefulWidget {
-
-  final User gCurrentUser ;
+  final User gCurrentUser;
   Timeline({this.gCurrentUser});
 
   @override
@@ -23,10 +23,27 @@ class Timeline extends StatefulWidget {
 
 class _TimelineState extends State<Timeline> {
   List<PostWidget> posts;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> followingsList = [];
+
+  retriveTimeLine() async {
+    QuerySnapshot querySnapshot = await timelineReference
+        .document(widget.gCurrentUser.id)
+        .collection("timelinePosts")
+        .orderBy("timestamp", descending: true)
+        .getDocuments();
+
+    List<PostWidget> allPosts = querySnapshot.documents
+        .map((document) => PostWidget.fromDocument(document))
+        .toList();
+
+    setState(() {
+      this.posts = allPosts;
+    });
+  }
 
   TextEditingController searchTextEditingController = TextEditingController();
   Future<QuerySnapshot> futureSearchResults;
-  // bool searchresultpage=false;
 
   controlSearching(String str) {
     Future<QuerySnapshot> allUsers = usersReference
@@ -78,6 +95,7 @@ class _TimelineState extends State<Timeline> {
   }
 
   displaytimeline() {
+    // retriveTimeLine();
     if (posts == null) {
       return Center(child: CircularProgressIndicator());
     } else {
@@ -104,9 +122,10 @@ class _TimelineState extends State<Timeline> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                      // return UploadTest();
-                  return CreatePost(currentUser: currentUser,);
-                  
+                  // return UploadTest();
+                  return CreatePost(
+                    currentUser: currentUser,
+                  );
                 },
               ),
             );
@@ -149,17 +168,39 @@ class _TimelineState extends State<Timeline> {
     );
   }
 
+  retrieveFollowings() async {
+    QuerySnapshot querySnapshot = await timelineReference
+        .document(widget.gCurrentUser.id)
+        .collection("userFollowing")
+        .getDocuments();
+
+    setState(() {
+      followingsList = querySnapshot.documents
+          .map((document) => document.documentID)
+          .toList();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    retriveTimeLine();
+    retrieveFollowings();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: searchPageHeader(),
-      body: Background(
-        child: futureSearchResults == null
-            ? (currentUser.isacontributor
-                ? contributertimeline()
-                : displaytimeline())
-            : displayUsersFound(),
-      ),
+      body:Background(child: futureSearchResults == null
+          ? RefreshIndicator(
+              child: currentUser.isacontributor
+                  ? contributertimeline()
+                  : displaytimeline(),
+              onRefresh: () => retriveTimeLine())
+          : displayUsersFound(),
+      )
     );
   }
 }

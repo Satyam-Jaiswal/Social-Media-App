@@ -1,4 +1,3 @@
-
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/Components/or_divider.dart';
 import 'package:Walnut/Components/social_icon.dart';
@@ -20,21 +19,21 @@ import '../constants.dart';
 import 'createAccountPage.dart';
 import 'generalTimeline.dart';
 
-
 final GoogleSignIn gSignIn = GoogleSignIn();
 
 final activityFeedReference = Firestore.instance.collection("feed");
 final postsReference = Firestore.instance.collection("posts");
 final storageReference = FirebaseStorage.instance.ref().child("Post Pictures");
 
+final followersReference = Firestore.instance.collection("followers");
+final followingReference = Firestore.instance.collection("following");
+
+final timelineReference = Firestore.instance.collection("timeline");
+
 final usersReference = Firestore.instance.collection("users");
-
-
 
 final DateTime timestamp = DateTime.now();
 User currentUser;
-
-
 
 class CheckLogin extends StatefulWidget {
   @override
@@ -86,20 +85,20 @@ class _CheckLoginState extends State<CheckLogin> {
     gSignIn.signIn();
   }
 
-   logOutUser() {
+  logOutUser() {
     gSignIn.signOut();
   }
 
   whenPageChanges(int pageIndex) {
     setState(() {
-    this.getPageIndex = pageIndex;
-      
+      this.getPageIndex = pageIndex;
     });
   }
 
   saveDatatoFirebase() async {
     final GoogleSignInAccount gCurrentUser = gSignIn.currentUser;
-    DocumentSnapshot documentSnapshot = await usersReference.document(gCurrentUser.id).get();
+    DocumentSnapshot documentSnapshot =
+        await usersReference.document(gCurrentUser.id).get();
 
     if (!documentSnapshot.exists) {
       final username = await Navigator.push(context,
@@ -117,17 +116,17 @@ class _CheckLoginState extends State<CheckLogin> {
       });
 
       documentSnapshot = await usersReference.document(gCurrentUser.id).get();
-
     }
 
-    
-     currentUser = User.fromDocument(documentSnapshot);
-
+    currentUser = User.fromDocument(documentSnapshot);
   }
 
-
-  changePage(int pageIndex){
-    pageController.animateToPage(pageIndex, duration: Duration(milliseconds: 400), curve: Curves.bounceInOut,);
+  changePage(int pageIndex) {
+    pageController.animateToPage(
+      pageIndex,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.bounceInOut,
+    );
   }
 
   Scaffold loginScreen() {
@@ -193,19 +192,23 @@ class _CheckLoginState extends State<CheckLogin> {
   Scaffold userTimeline() {
     return Scaffold(
       body: Background(
-          child: PageView(
-            children: <Widget>[
-              Timeline(gCurrentUser: currentUser,),
-              Search(),
-              NotificationPage(),
-              ProfilePage(userProfileId: currentUser?.id, isacontributor:currentUser?.isacontributor ,),
-              // IconButton(icon: Icon(Icons.clear, color: Colors.white,), onPressed: logOutUser()),),
-            ],
-            controller: pageController,
-            onPageChanged: whenPageChanges,
-            physics: NeverScrollableScrollPhysics(),
-          ),
-      
+        child: PageView(
+          children: <Widget>[
+            Timeline(
+              gCurrentUser: currentUser,
+            ),
+            Search(),
+            NotificationPage(),
+            ProfilePage(
+              userProfileId: currentUser?.id,
+              
+            ),
+            // IconButton(icon: Icon(Icons.clear, color: Colors.white,), onPressed: logOutUser()),),
+          ],
+          controller: pageController,
+          onPageChanged: whenPageChanges,
+          physics: NeverScrollableScrollPhysics(),
+        ),
       ),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: getPageIndex,
@@ -219,11 +222,11 @@ class _CheckLoginState extends State<CheckLogin> {
           BottomNavigationBarItem(icon: Icon(Icons.notifications)),
           BottomNavigationBarItem(icon: Icon(Icons.person)),
           // BottomNavigationBarItem(icon: Icon(Icons.logout)),
-          
         ],
       ),
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
