@@ -124,20 +124,20 @@ class _PostWidgetState extends State<PostWidget> {
             child: Text(
               user.username,
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           subtitle: Text(
-            location,
-            style: TextStyle(color: Colors.white),
+            'titel',
+            style: TextStyle(color: Colors.black),
           ),
           trailing: isPostOwner
               ? IconButton(
                   icon: Icon(
                     Icons.delete,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () {
                   print("deleted");
@@ -238,6 +238,7 @@ class _PostWidgetState extends State<PostWidget> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
+          // Text('descriptionkdsuthiutilulod'),
           Image.network(url),
           showHeart
               ? Icon(
@@ -289,7 +290,7 @@ class _PostWidgetState extends State<PostWidget> {
               child: Text(
                 "$likeCount likes",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -304,7 +305,7 @@ class _PostWidgetState extends State<PostWidget> {
               child: Text(
                 "$username",
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -312,7 +313,7 @@ class _PostWidgetState extends State<PostWidget> {
             Expanded(
               child: Text(
                 description,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.black),
               ),
             ),
           ],
@@ -321,10 +322,10 @@ class _PostWidgetState extends State<PostWidget> {
     );
   }
 
-  // displayComments(BuildContext context,
-  //     {String postId, String ownerId, String url}) {
-  //   Navigator.push(context, MaterialPageRoute(builder: (context) {
-  //     return Container();
-  //   }));
-  // }
+  displayComments(BuildContext context,
+      {String postId, String ownerId, String url}) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return Container();
+    }));
+  }
 }

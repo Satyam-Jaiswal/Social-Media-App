@@ -1,13 +1,18 @@
+// import 'dart:html';
+
+// import '/dart:html';
+
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/models/postWidget.dart';
 import 'package:Walnut/models/user.dart';
+import 'package:Walnut/widgets/PostTile.dart';
 import 'package:Walnut/widgets/headerWidget.dart';
-import 'package:Walnut/widgets/rounded_button.dart';
+// import 'package:Walnut/widgets/rounded_button.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+// import '../constants.dart';
 import 'checkLogin.dart';
 import 'editprofilepage.dart';
 
@@ -27,7 +32,7 @@ class _ProfilePageState extends State<ProfilePage> {
   bool loading = false;
   int countPost = 0;
   List<PostWidget> postsList = [];
-  String postOrientation = "grid";
+  String postOrientation = "list";
   int countTotalFollowers = 0;
   int countTotalFollowings = 0;
   bool following = false;
@@ -362,12 +367,100 @@ class _ProfilePageState extends State<ProfilePage> {
           children: <Widget>[
             creteProfileTopView(),
             Divider(),
-            Divider(
-              color: Colors.black,
-            ),
+            createListAndGridPostOrientation(),
+            Divider(),
+            Center(child: displayProfilePost()),
           ],
         ),
       ),
     );
+  }
+
+  createListAndGridPostOrientation() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        IconButton(
+          onPressed: () => setOrientation("list"),
+          icon: Icon(Icons.list),
+          color: postOrientation == "list"
+              ? Theme.of(context).primaryColor
+              : Colors.grey,
+        ),
+        IconButton(
+          onPressed: () => setOrientation("grid"),
+          icon: Icon(Icons.favorite_outline_outlined),
+          color: postOrientation == "grid"
+              ? Theme.of(context).primaryColor
+              : Colors.grey,
+        ),
+      ],
+    );
+  }
+
+  HealthStats(){
+    return Container(child: Text('YOU CANNOT ASCESS THIS DATA'),);
+  }
+
+  setOrientation(String orientation) {
+    setState(() {
+      this.postOrientation = orientation;
+    });
+  }
+
+  displayProfilePost() {
+    if (loading) {
+      return CircularProgressIndicator();
+    } else if (postsList.isEmpty) {
+      return Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.all(30.0),
+              child: Icon(
+                Icons.photo_library,
+                color: Colors.grey,
+                size: 100.0,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 20.0),
+              child: Text(
+                "No posts",
+                style: TextStyle(
+                    color: Colors.redAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40.0),
+              ),
+            ),
+          ],
+        ),
+      );
+    } else if (postOrientation == "grid") {
+      return Center(child: Column(
+        children:<Widget> [
+          SizedBox(height: 80,),
+          Text('you cannot ascess this data'),
+        ],
+      ),);
+      // List<GridTile> gridTilesList = [];
+      // postsList.forEach((eachPost) {
+      //   gridTilesList.add(GridTile(child: PostTile(eachPost)));
+      // // });
+      // return GridView.count(
+      //   crossAxisCount: 3,
+      //   childAspectRatio: 1.0,
+      //   mainAxisSpacing: 1.5,
+      //   crossAxisSpacing: 1.5,
+      //   shrinkWrap: true,
+      //   physics: NeverScrollableScrollPhysics(),
+      //   children: gridTilesList,
+      
+    } else if (postOrientation == "list") {
+      return Column(
+        children: postsList,
+      );
+    }
   }
 }

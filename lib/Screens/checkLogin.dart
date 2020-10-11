@@ -25,6 +25,7 @@ final activityFeedReference = Firestore.instance.collection("feed");
 final postsReference = Firestore.instance.collection("posts");
 final storageReference = FirebaseStorage.instance.ref().child("Post Pictures");
 
+
 final followersReference = Firestore.instance.collection("followers");
 final followingReference = Firestore.instance.collection("following");
 
