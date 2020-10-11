@@ -441,7 +441,7 @@ class _ProfilePageState extends State<ProfilePage> {
       return Center(child: Column(
         children:<Widget> [
           SizedBox(height: 80,),
-          Text('you cannot ascess this data'),
+          Text('you cannot  access this data'),
         ],
       ),);
       // List<GridTile> gridTilesList = [];
