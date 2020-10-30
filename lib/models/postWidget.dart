@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:Walnut/Screens/checkLogin.dart';
-// import 'package:Walnut/Screens/commentPage.dart';
 import 'package:Walnut/Screens/profile.dart';
 import 'package:Walnut/models/user.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -122,17 +121,17 @@ class _PostWidgetState extends State<PostWidget> {
           title: GestureDetector(
             onTap: () => displayUserProfile(context, userProfileId: user.id),
             child: Text(
-              user.username,
+              user.profileName,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          subtitle: Text(
-            'titel',
-            style: TextStyle(color: Colors.black),
-          ),
+          // subtitle: Text(
+          //   'titel',
+          //   style: TextStyle(color: Colors.black),
+          // ),
           trailing: isPostOwner
               ? IconButton(
                   icon: Icon(
@@ -242,9 +241,9 @@ class _PostWidgetState extends State<PostWidget> {
           Image.network(url),
           showHeart
               ? Icon(
-                  Icons.favorite,
+                  Icons.thumb_up,
                   size: 140.0,
-                  color: Colors.pink,
+                  color: Colors.blue,
                 )
               : Text(""),
         ],
@@ -255,6 +254,33 @@ class _PostWidgetState extends State<PostWidget> {
   createPostFooter() {
     return Column(
       children: <Widget>[
+         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            // Container(
+            //   margin: EdgeInsets.only(left: 20.0),
+            //   child: 
+            //   // Text(
+            //   //   "$username",
+            //   //   style: TextStyle(
+            //   //     color: Colors.black,
+            //   //     fontWeight: FontWeight.bold,
+            //   //   ),
+            //   // ),
+            // ),
+            Container(
+              // padding: EdgeInsets.all(10)
+              child: Expanded(
+                
+                child: Text(
+                  // "shivaay",
+                  description,
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ),
+          ],
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -264,13 +290,25 @@ class _PostWidgetState extends State<PostWidget> {
             GestureDetector(
               onTap: () => controlUserLikePost(),
               child: Icon(
-                isLiked ? Icons.favorite : Icons.favorite_border,
+                isLiked ? Icons.thumb_up : Icons.thumb_up_alt_outlined,
                 size: 28.0,
-                color: Colors.pink,
+                color: Colors.blue,
+              ),
+              
+            ),
+
+            Container(
+              margin: EdgeInsets.only(left: 10.0),
+              child: Text(
+                "$likeCount likes",
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(right: 20.0),
+              padding: EdgeInsets.only(right: 10.0),
             ),
             GestureDetector(
               // onTap: () => displayComments(context,
@@ -278,46 +316,46 @@ class _PostWidgetState extends State<PostWidget> {
               child: Icon(
                 Icons.chat_bubble_outline,
                 size: 28.0,
-                color: Colors.black,
+                color: Colors.blue,
               ),
             ),
           ],
         ),
-        Row(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "$likeCount likes",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(left: 20.0),
-              child: Text(
-                "$username",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            Expanded(
-              child: Text(
-                description,
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   children: <Widget>[
+        //     Container(
+        //       margin: EdgeInsets.only(left: 20.0),
+        //       child: Text(
+        //         "$likeCount likes",
+        //         style: TextStyle(
+        //           color: Colors.black,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // Row(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: <Widget>[
+        //     Container(
+        //       margin: EdgeInsets.only(left: 20.0),
+        //       child: Text(
+        //         "$username",
+        //         style: TextStyle(
+        //           color: Colors.black,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //     Expanded(
+        //       child: Text(
+        //         description,
+        //         style: TextStyle(color: Colors.black),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }
@@ -329,3 +367,4 @@ class _PostWidgetState extends State<PostWidget> {
     }));
   }
 }
+

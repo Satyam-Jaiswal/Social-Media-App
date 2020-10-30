@@ -1,6 +1,4 @@
-// import 'dart:html';
 
-// import '/dart:html';
 
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/models/postWidget.dart';
@@ -36,6 +34,12 @@ class _ProfilePageState extends State<ProfilePage> {
   int countTotalFollowers = 0;
   int countTotalFollowings = 0;
   bool following = false;
+
+  //  logoutUser() async {
+  //   await gSignIn.signOut();
+  //   Navigator.push(
+  //       context, MaterialPageRoute(builder: (context) => CheckLogin()));
+  // }
 
   void initState() {
     super.initState();
@@ -326,23 +330,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-              // RoundedButton(
-              //   text: "Edit Profile",
-              //   color: kPrimaryLightColor,
-              //   textColor: Colors.black,
-              //   press: () {
-              //     Navigator.push(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) {
-              //           return EditProfilePage(
-              //             currentOnlineUserId: currentUser.id,
-              //           );
-              //         },
-              //       ),
-              //     );
-              //   },
-              // ),
+             
             ],
           ),
         );
@@ -350,18 +338,10 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // editUserProfile() {
-  //   Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) =>
-  //               EditProfilePage(currentUserId: currentUserId)));
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, strTitle: "Profile"),
+      appBar: header(context, strTitle : "Profile"),
       body: Background(
         child: ListView(
           children: <Widget>[
@@ -444,19 +424,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Text('you cannot  access this data'),
         ],
       ),);
-      // List<GridTile> gridTilesList = [];
-      // postsList.forEach((eachPost) {
-      //   gridTilesList.add(GridTile(child: PostTile(eachPost)));
-      // // });
-      // return GridView.count(
-      //   crossAxisCount: 3,
-      //   childAspectRatio: 1.0,
-      //   mainAxisSpacing: 1.5,
-      //   crossAxisSpacing: 1.5,
-      //   shrinkWrap: true,
-      //   physics: NeverScrollableScrollPhysics(),
-      //   children: gridTilesList,
-      
+     
     } else if (postOrientation == "list") {
       return Column(
         children: postsList,
