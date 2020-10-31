@@ -1,7 +1,7 @@
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/Components/or_divider.dart';
 import 'package:Walnut/Components/social_icon.dart';
-import 'package:Walnut/Screens/journey.dart';
+import 'package:Walnut/Screens/Journey/journey.dart';
 import 'package:Walnut/Screens/timeline.dart';
 import 'package:Walnut/Screens/notification.dart';
 import 'package:Walnut/Screens/profile.dart';
