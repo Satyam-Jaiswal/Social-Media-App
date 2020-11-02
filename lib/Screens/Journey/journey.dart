@@ -1,6 +1,8 @@
 import 'package:Walnut/Components/backgroung.dart';
+import 'package:Walnut/Screens/checkLogin.dart';
 import 'package:Walnut/widgets/headerWidget.dart';
 import 'package:Walnut/widgets/rounded_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'DisplayGrp.dart';
@@ -12,6 +14,68 @@ class Journey extends StatefulWidget {
 }
 
 class _JourneyState extends State<Journey> {
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<String> followingsList = [];
+  TextEditingController searchTextEditingController = TextEditingController();
+  Future<QuerySnapshot> futureSearchResults;
+
+  emptyTheTextFormField() {
+    searchTextEditingController.clear();
+  }
+
+   void changestate() {
+    setState(() {
+      futureSearchResults = null;
+      // displayGrouplist();
+      emptyTheTextFormField();
+    });
+  }
+
+  AppBar searchPageHeader() {
+    return AppBar(
+      // backgroundColor: Colors.black,
+      // leading: Padding(
+      //     padding: EdgeInsets.all(2),
+      //     child: Image.asset('assets/icons/logo.png')),
+      title: TextFormField(
+        style: TextStyle(
+          fontSize: 18.0,
+          color: Colors.white,
+        ),
+        controller: searchTextEditingController,
+        decoration: InputDecoration(
+          hintText: "Search here....",
+          hintStyle: TextStyle(
+            color: Colors.grey,
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: Colors.grey),
+          ),
+          filled: true,
+          prefixIcon: Icon(
+            Icons.person_pin,
+            color: Colors.white,
+            size: 30.0,
+          ),
+          suffixIcon: IconButton(
+              icon: Icon(
+                Icons.clear,
+                color: Colors.white,
+              ),
+              onPressed: changestate),
+        ),
+        onFieldSubmitted: controlSearching,
+      ),
+    );
+  }
+
+
+controlSearching(String str) {
+    Future<QuerySnapshot> allgrp = gropuReference
+        .where("grpName", isGreaterThanOrEqualTo: str)
+        .getDocuments();
+    futureSearchResults = allgrp;
+  }
 
 
   displayGrp(){
@@ -20,7 +84,7 @@ class _JourneyState extends State<Journey> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, strTitle: "Journey"),
+      appBar: searchPageHeader(),
       body: Background(
           child: Column(
             children: [
@@ -64,7 +128,7 @@ class _JourneyState extends State<Journey> {
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return CreateGrp(                   
+                  return CreateGrp(currentOnlineUserId:currentUser.id                   
                   );
                 },
               ),

@@ -1,6 +1,6 @@
 import 'package:Walnut/Components/backgroung.dart';
-import 'package:Walnut/widgets/headerWidget.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:Walnut/widgets/headerWidget.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class Grp extends StatefulWidget {

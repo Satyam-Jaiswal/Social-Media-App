@@ -341,7 +341,18 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: header(context, strTitle : "Profile"),
+      appBar: AppBar(title: Center(child: Text("Profile")), actions: <Widget>[
+    Padding(
+      padding: EdgeInsets.only(right: 20.0),
+      child: GestureDetector(
+        onTap: () {},
+        child: Icon(
+          Icons.logout,
+          size: 26.0,
+        ),
+      )
+    ),
+      ]),
       body: Background(
         child: ListView(
           children: <Widget>[
