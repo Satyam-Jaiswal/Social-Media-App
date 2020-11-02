@@ -1,8 +1,4 @@
-// import 'dart:developer';
-
 import 'package:Walnut/Components/backgroung.dart';
-// import 'package:Walnut/Screens/profile.dart';
-// import 'package:Walnut/Screens/uplodeTest.dart';
 import 'package:Walnut/models/postWidget.dart';
 import 'package:Walnut/models/user.dart';
 import 'package:Walnut/widgets/rounded_button.dart';
@@ -191,16 +187,16 @@ class _TimelineState extends State<Timeline> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
-      appBar: searchPageHeader(),
-      body:Background(child: futureSearchResults == null
-          ? RefreshIndicator(
-              child: currentUser.isacontributor
-                  ? contributertimeline()
-                  : displaytimeline(),
-              onRefresh: () => retriveTimeLine())
-          : displayUsersFound(),
-      )
-    );
+        key: _scaffoldKey,
+        appBar: searchPageHeader(),
+        body: Background(
+          child: futureSearchResults == null
+              ? RefreshIndicator(
+                  child: currentUser.isacontributor
+                      ? contributertimeline()
+                      : displaytimeline(),
+                  onRefresh: () => retriveTimeLine())
+              : displayUsersFound(),
+        ));
   }
 }

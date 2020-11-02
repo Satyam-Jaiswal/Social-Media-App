@@ -10,7 +10,7 @@ class _GeneralTimelineState extends State<GeneralTimeline> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Background(child: Text("Generaltimeline pages"),),
+      body: Background(child: Text("REMOVE THIS PAGE"),),
       
     );
   }

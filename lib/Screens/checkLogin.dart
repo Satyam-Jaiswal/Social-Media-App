@@ -2,6 +2,7 @@ import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/Components/or_divider.dart';
 import 'package:Walnut/Components/social_icon.dart';
 import 'package:Walnut/Screens/Journey/journey.dart';
+import 'package:Walnut/Screens/createAccountPage.dart';
 import 'package:Walnut/Screens/timeline.dart';
 import 'package:Walnut/Screens/notification.dart';
 import 'package:Walnut/Screens/profile.dart';
@@ -16,7 +17,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../constants.dart';
-import 'createAccountPage.dart';
+// import 'createAccountPage.dart';
 import 'generalTimeline.dart';
 
 final GoogleSignIn gSignIn = GoogleSignIn();
@@ -202,9 +203,7 @@ class _CheckLoginState extends State<CheckLogin> {
             NotificationPage(),
             ProfilePage(
               userProfileId: currentUser?.id,
-              
             ),
-            // IconButton(icon: Icon(Icons.clear, color: Colors.white,), onPressed: logOutUser()),),
           ],
           controller: pageController,
           onPageChanged: whenPageChanges,
@@ -222,12 +221,10 @@ class _CheckLoginState extends State<CheckLogin> {
           BottomNavigationBarItem(icon: Icon(Icons.directions_run)),
           BottomNavigationBarItem(icon: Icon(Icons.notifications)),
           BottomNavigationBarItem(icon: Icon(Icons.person)),
-          // BottomNavigationBarItem(icon: Icon(Icons.logout)),
         ],
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {

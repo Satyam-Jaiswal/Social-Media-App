@@ -11,8 +11,8 @@ class PostWidget extends StatefulWidget {
   final String ownerId;
   final dynamic likes;
   final String username;
-  final String description;
-  final String location;
+  final String content;
+  final String tags;
   final String url;
 
   PostWidget({
@@ -20,8 +20,8 @@ class PostWidget extends StatefulWidget {
     this.ownerId,
     this.likes,
     this.username,
-    this.description,
-    this.location,
+    this.content,
+    this.tags,
     this.url,
   });
 
@@ -31,8 +31,8 @@ class PostWidget extends StatefulWidget {
       ownerId: documentSnapshot["ownerId"],
       likes: documentSnapshot["likes"],
       username: documentSnapshot["username"],
-      description: documentSnapshot["description"],
-      location: documentSnapshot["location"],
+      content: documentSnapshot["description"],
+      tags: documentSnapshot["location"],
       url: documentSnapshot["url"],
     );
   }
@@ -56,8 +56,8 @@ class PostWidget extends StatefulWidget {
         ownerId: this.ownerId,
         likes: this.likes,
         username: this.username,
-        description: this.description,
-        location: this.location,
+        content: this.content,
+        tags: this.tags,
         url: this.url,
         likeCount: getTotalNumberOfLikes(this.likes),
       );
@@ -68,8 +68,8 @@ class _PostWidgetState extends State<PostWidget> {
   final String ownerId;
   Map likes;
   final String username;
-  final String description;
-  final String location;
+  final String content;
+  final String tags;
   final String url;
   int likeCount;
   bool isLiked;
@@ -81,8 +81,8 @@ class _PostWidgetState extends State<PostWidget> {
     this.ownerId,
     this.likes,
     this.username,
-    this.description,
-    this.location,
+    this.content,
+    this.tags,
     this.url,
     this.likeCount,
   });
@@ -95,9 +95,7 @@ class _PostWidgetState extends State<PostWidget> {
       child: Column(
         children: <Widget>[
           createPostHead(),
-         
           createPostPicture(),
-          
           createPostFooter()
         ],
       ),
@@ -109,7 +107,9 @@ class _PostWidgetState extends State<PostWidget> {
       future: usersReference.document(ownerId).get(),
       builder: (context, dataSnapshot) {
         if (!dataSnapshot.hasData) {
-          return Center(child: CircularProgressIndicator(), );
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
         User user = User.fromDocument(dataSnapshot.data);
         bool isPostOwner = currentOnlineUserId == ownerId;
@@ -128,10 +128,6 @@ class _PostWidgetState extends State<PostWidget> {
               ),
             ),
           ),
-          // subtitle: Text(
-          //   'titel',
-          //   style: TextStyle(color: Colors.black),
-          // ),
           trailing: isPostOwner
               ? IconButton(
                   icon: Icon(
@@ -139,11 +135,9 @@ class _PostWidgetState extends State<PostWidget> {
                     color: Colors.black,
                   ),
                   onPressed: () {
-                  print("deleted");
-                  //TODO
-                    
-                  } 
-                )
+                    print("deleted");
+                    //TODO
+                  })
               : Text(""),
         );
       },
@@ -237,7 +231,6 @@ class _PostWidgetState extends State<PostWidget> {
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
-          // Text('descriptionkdsuthiutilulod'),
           Image.network(url),
           showHeart
               ? Icon(
@@ -254,27 +247,13 @@ class _PostWidgetState extends State<PostWidget> {
   createPostFooter() {
     return Column(
       children: <Widget>[
-         Row(
+        Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // Container(
-            //   margin: EdgeInsets.only(left: 20.0),
-            //   child: 
-            //   // Text(
-            //   //   "$username",
-            //   //   style: TextStyle(
-            //   //     color: Colors.black,
-            //   //     fontWeight: FontWeight.bold,
-            //   //   ),
-            //   // ),
-            // ),
             Container(
-              // padding: EdgeInsets.all(10)
               child: Expanded(
-                
                 child: Text(
-                  // "shivaay",
-                  description,
+                  content,
                   style: TextStyle(color: Colors.black),
                 ),
               ),
@@ -294,9 +273,7 @@ class _PostWidgetState extends State<PostWidget> {
                 size: 28.0,
                 color: Colors.blue,
               ),
-              
             ),
-
             Container(
               margin: EdgeInsets.only(left: 10.0),
               child: Text(
@@ -312,7 +289,7 @@ class _PostWidgetState extends State<PostWidget> {
             ),
             GestureDetector(
               // onTap: () => displayComments(context,
-                  // postId: postId, ownerId: ownerId, url: url),
+              // postId: postId, ownerId: ownerId, url: url),
               child: Icon(
                 Icons.chat_bubble_outline,
                 size: 28.0,
@@ -321,41 +298,6 @@ class _PostWidgetState extends State<PostWidget> {
             ),
           ],
         ),
-        // Row(
-        //   children: <Widget>[
-        //     Container(
-        //       margin: EdgeInsets.only(left: 20.0),
-        //       child: Text(
-        //         "$likeCount likes",
-        //         style: TextStyle(
-        //           color: Colors.black,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        // Row(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: <Widget>[
-        //     Container(
-        //       margin: EdgeInsets.only(left: 20.0),
-        //       child: Text(
-        //         "$username",
-        //         style: TextStyle(
-        //           color: Colors.black,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //       ),
-        //     ),
-        //     Expanded(
-        //       child: Text(
-        //         description,
-        //         style: TextStyle(color: Colors.black),
-        //       ),
-        //     ),
-        //   ],
-        // ),
       ],
     );
   }
@@ -367,4 +309,3 @@ class _PostWidgetState extends State<PostWidget> {
     }));
   }
 }
-

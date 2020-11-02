@@ -57,7 +57,7 @@ class _CreatePostState extends State<CreatePost> {
     }
 
     savePostInfoToFireStore(
-        url: downloadUrl, description: descriptionTextEditingController.text);
+        url: downloadUrl, content: descriptionTextEditingController.text);
 
     descriptionTextEditingController.clear();
 
@@ -71,7 +71,7 @@ class _CreatePostState extends State<CreatePost> {
     return Timeline();
   }
 
-  savePostInfoToFireStore({String url, String location, String description}) {
+  savePostInfoToFireStore({String url, String location, String content}) {
     postsReference
         .document(widget.currentUser.id)
         .collection("userPosts")
@@ -82,8 +82,8 @@ class _CreatePostState extends State<CreatePost> {
       "timestamp": DateTime.now(),
       "likes": {},
       "username": widget.currentUser.username,
-      "description": description,
-      "location": null,
+      "content": content,
+      "tags": null,
       "url": url,
     });
   }
