@@ -1,4 +1,5 @@
 import 'package:Walnut/Components/backgroung.dart';
+import 'package:Walnut/Screens/Journey/model/group.dart';
 import 'package:Walnut/Screens/checkLogin.dart';
 import 'package:Walnut/widgets/headerWidget.dart';
 import 'package:Walnut/widgets/rounded_button.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'DisplayGrp.dart';
 import 'creategrp.dart';
+import 'grp_search/searchGroup.dart';
 
 class Journey extends StatefulWidget {
   @override
@@ -23,7 +25,7 @@ class _JourneyState extends State<Journey> {
     searchTextEditingController.clear();
   }
 
-   void changestate() {
+  void changestate() {
     setState(() {
       futureSearchResults = null;
       // displayGrouplist();
@@ -33,10 +35,6 @@ class _JourneyState extends State<Journey> {
 
   AppBar searchPageHeader() {
     return AppBar(
-      // backgroundColor: Colors.black,
-      // leading: Padding(
-      //     padding: EdgeInsets.all(2),
-      //     child: Image.asset('assets/icons/logo.png')),
       title: TextFormField(
         style: TextStyle(
           fontSize: 18.0,
@@ -69,75 +67,75 @@ class _JourneyState extends State<Journey> {
     );
   }
 
-
-controlSearching(String str) {
+  controlSearching(String str) {
     Future<QuerySnapshot> allgrp = gropuReference
         .where("grpName", isGreaterThanOrEqualTo: str)
         .getDocuments();
     futureSearchResults = allgrp;
   }
 
-
-  displayGrp(){
-     Navigator.push(context, MaterialPageRoute(builder: (context) => Grp()));
+  displayGrp() {
+    Navigator.push(context, MaterialPageRoute(builder: (context) => Grp()));
   }
+
+  alreadyjoinedGroup(){
+    return Container(child: Text('shivaay'),);
+  }
+  diaplaySearchResult(){
+    return FutureBuilder(
+      future: futureSearchResults,
+      builder: (context, dataSnapshot) {
+        if (!dataSnapshot.hasData) {
+          return CircularProgressIndicator();
+        }
+        List<GroupResult> searchGroupsResult = [];
+        dataSnapshot.data.documents.forEach((document) {
+          Group eachGroup = Group.fromDocument(document);
+          GroupResult groupResult = GroupResult(eachGroup);
+          searchGroupsResult.add(groupResult);
+        });
+
+        return ListView(
+          children: searchGroupsResult,
+        );
+      },
+    );
+  }
+
+  midsec() {
+    return Container(
+        child: futureSearchResults == null
+            ? alreadyjoinedGroup()
+            : diaplaySearchResult());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: searchPageHeader(),
       body: Background(
-          child: Column(
-            children: [
-              Expanded(
-                          child: Column(
-        children: [
-                GestureDetector(
-                  
-                  onTap: () => displayGrp(),
-                  child: Container(
-                    color: Colors.amber,
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: CircleAvatar(
-                            radius: 50,
-                            backgroundColor: Colors.blue,
-                          ),
-                        ),
-                        Text(
-                          'Group Name',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
+        child: Column(
+          children: [
+            Expanded(child:  midsec(),),
+           
+            RoundedButton(
+              text: "CREATE GROUP",
+              color: Colors.blue[200],
+              textColor: Colors.black,
+              press: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return CreateGrp(currentOnlineUserId: currentUser.id);
+                    },
                   ),
-                )
-        ],
-      ),
-              ),RoundedButton(
-          text: "CREATE GROUP",
-          color: Colors.blue[200],
-          textColor: Colors.black,
-          press: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return CreateGrp(currentOnlineUserId:currentUser.id                   
-                  );
-                },
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ],
         ),
-            ],
-          ),
-          ),
+      ),
     );
   }
 }
