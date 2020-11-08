@@ -12,7 +12,6 @@ class GroupResult extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.all(5.0),
       child: Container(
-        // color: Colors.grey,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

@@ -1,7 +1,7 @@
 import 'package:Walnut/Components/backgroung.dart';
 import 'package:Walnut/Screens/Journey/model/group.dart';
 import 'package:Walnut/Screens/checkLogin.dart';
-import 'package:Walnut/widgets/headerWidget.dart';
+// import 'package:Walnut/widgets/headerWidget.dart';
 import 'package:Walnut/widgets/rounded_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -78,10 +78,20 @@ class _JourneyState extends State<Journey> {
     Navigator.push(context, MaterialPageRoute(builder: (context) => Grp()));
   }
 
-  alreadyjoinedGroup(){
-    return Container(child: Text('shivaay'),);
+  alreadyjoinedGroup() {
+    return Container(
+      child: 
+      Column(
+        children: [
+          Text('satyam'),
+          IconButton(icon: Icon(Icons.ac_unit),onPressed: () => displayGrp(),)
+        ],
+      ),
+      
+    );
   }
-  diaplaySearchResult(){
+
+  diaplaySearchResult() {
     return FutureBuilder(
       future: futureSearchResults,
       builder: (context, dataSnapshot) {
@@ -116,8 +126,9 @@ class _JourneyState extends State<Journey> {
       body: Background(
         child: Column(
           children: [
-            Expanded(child:  midsec(),),
-           
+            Expanded(
+              child: midsec(),
+            ),
             RoundedButton(
               text: "CREATE GROUP",
               color: Colors.blue[200],
