@@ -11,7 +11,9 @@ class GroupResult extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(5.0),
+
       child: Container(
+
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -21,7 +23,7 @@ class GroupResult extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.all(9.0),
                       child: CircleAvatar(
                         radius: 50,
                         backgroundColor: Colors.black,
@@ -30,7 +32,7 @@ class GroupResult extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      eachGroup.grpname,
+                      eachGroup.grpname ,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 20.0,
@@ -45,7 +47,7 @@ class GroupResult extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
-          color: Colors.grey,
+          color: Colors.grey[400],
         ),
       ),
     );
